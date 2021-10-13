@@ -61,4 +61,19 @@ describe('. routes', () => {
         });
       });
   });
+  it('Deletes an maps by Id via DELETE', async () => {
+    const maps = await Map.post({  image: 'www.ww.com',
+      locations: ['1ft', '2ft'] });
+    
+    return request(app)
+      .delete(`/api/v1/maps/${maps.id}`)
+      .then(res => {
+        expect(res.body).toEqual({ id: '1',
+          image: 'www.ww.com',
+          locations: ['1ft', '2ft'],
+        });
+      });
+  });
+
+
 });
