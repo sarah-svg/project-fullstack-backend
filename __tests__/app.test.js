@@ -74,6 +74,25 @@ describe('. routes', () => {
         });
       });
   });
+  it('updates a map by id', async () => {
+    const map = await Map.post({
+      image: 'www.ww.com',
+      locations: ['1ft', '2ft']
+    });
 
+    return request(app)
+      .put(`/api/v1/maps/${map.id}`)
+      .send({
+        image: 'www.ww.com',
+        locations: ['4ft', '6ft']
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          id: map.id,
+          image: 'www.ww.com',
+          locations: ['4ft', '6ft']
+        });
+      });
+  });
 
 });
