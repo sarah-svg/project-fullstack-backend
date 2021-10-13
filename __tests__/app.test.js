@@ -36,8 +36,7 @@ describe('. routes', () => {
         locations: ['4ft', '8ft'],
       }
     ].map(map => Map.post(map)));
-    console.log(maps);
-    
+
     return request(app)
       .get('/api/v1/maps')
       .then(res => {
@@ -46,5 +45,20 @@ describe('. routes', () => {
         });
       });
 
+  });
+  it('get map by id', async () => {
+    const map =  await Map.post({
+      image: 'www.ww.com',
+      locations: ['1ft', '2ft'],
+    });
+    return request(app)
+      .get(`/api/v1/maps/${map.id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          id: map.id,
+          image: 'www.ww.com',
+          locations: ['1ft', '2ft'],
+        });
+      });
   });
 });
